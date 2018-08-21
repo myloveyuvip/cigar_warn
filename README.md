@@ -1,19 +1,26 @@
-# cigar_warn
+# hsweb 3.0 演示
 
-> 便捷开发的后台管理系统，整合github上流行的hsweb和vue-element-admin
+## 接口文档
 
-## 后端技术
-    1. hsweb
-    2. spring boot
-  
+http://cdn-blog.jetbrains.org.cn/doc/all.html
 
-## 前端技术
-    1. vue-element-admin
-    2. vue
-    3. element-ui
-    
-## 功能组件
-    1. 权限管理模块RBAC
-    2. 数据字典管理，映射前端下拉框及展示
-    3. excel导入/导出
-    4. 图片查看组件 viewer
+也可以执行org.hswebframework.web.demo.DemoApplicationTests 自己生成
+
+
+## 运行
+```bash
+    $ git clone https://github.com/hs-web/hsweb3-demo.git
+    $ ./mvnw spring-boot:run
+```
+
+或者导入ide,等待maven依赖下载完后执行: 
+``Application.main``
+
+启动成功后打开: http://localhost:8089 ,帐号:admin 密码:admin
+
+## 无法下载依赖?
+查看maven的settings.xml是否配置了私服,删掉或者mirrorOf不要为*
+
+
+## 注意
+本项目是完全开源的,但是由于miniui并非开源项目,仅作为演示hsweb功能,学习所用.如果要将此项目用于商用,请先获得miniui许可.我们正在开发[基于layui的前端实现](https://github.com/hs-web/hsweb-ui-layui),敬请期待.

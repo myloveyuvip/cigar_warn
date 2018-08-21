@@ -1,11 +1,10 @@
 package com.yuliyao.web.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import com.yuliyao.web.entity.Result;
 import com.yuliyao.web.entity.Vendor;
 import com.yuliyao.web.repository.VendorRepository;
 import com.yuliyao.web.utils.ResultUtil;
-import io.swagger.annotations.Api;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +14,6 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@Api(
-        value = "无证户",
-        tags = {"无证户管理"}
-)
 public class VendorController {
 
 
@@ -44,7 +39,7 @@ public class VendorController {
 
     @GetMapping("vendors")
     public Result<Vendor> getVendorAll() {
-        List<Vendor> all = vendorRepository.findAll();
+        List<Vendor> all = vendorRepository.findAllByOrderByIdDesc();
         return ResultUtil.success(all);
     }
 

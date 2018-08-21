@@ -17,10 +17,6 @@ public class DictController {
     @Autowired
     private DictionaryService dictionaryService;
 
-    /**
-     * 查询数据字典映射
-     * @return
-     */
     @GetMapping("dict/allMap")
     public Map<String, Map<String,String>> queryAllDictForMap() {
         return dictionaryService.queryAllDictForMap();

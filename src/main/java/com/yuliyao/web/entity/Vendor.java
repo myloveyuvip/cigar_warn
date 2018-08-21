@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
+/**
+ * @author yuliyao
+ */
 @Data
 @Entity
 @Table(name = "t_vendor")
@@ -18,7 +21,7 @@ public class Vendor extends SimpleGenericEntity<Long> {
     @Id
     @GeneratedValue
     private Long id;
-    private String  VendorName;
+    private String  vendorName;
     private Integer managerOffice;
     private String  address;
     private Integer isNearSchool;
