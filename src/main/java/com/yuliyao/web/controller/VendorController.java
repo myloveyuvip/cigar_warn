@@ -49,4 +49,10 @@ public class VendorController {
         return ResultUtil.success(vendor);
     }
 
+    @DeleteMapping("vendor/{id}")
+    public Result deleteVendor(@PathVariable("id") Long id){
+        vendorRepository.delete(id);
+        return ResultUtil.success();
+    }
+
 }
