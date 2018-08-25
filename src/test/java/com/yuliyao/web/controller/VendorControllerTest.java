@@ -32,7 +32,7 @@ public class VendorControllerTest {
         vendor.setHasLicense(1);
         vendor.setIllegalTimes(1);
         vendor.setIndustryType(1);
-        vendor.setIsNearSchool(1);
+        vendor.setIsNearSchool(0);
         vendor.setIsSpecialPlace(1);
         vendor.setLatitude(111.23);
         vendor.setLongitude(122.33);

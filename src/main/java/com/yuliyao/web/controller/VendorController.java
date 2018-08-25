@@ -1,5 +1,6 @@
 package com.yuliyao.web.controller;
 
+import com.yuliyao.web.service.VendorService;
 import lombok.extern.slf4j.Slf4j;
 import com.yuliyao.web.entity.Result;
 import com.yuliyao.web.entity.Vendor;
@@ -12,20 +13,27 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * @author yuliyao
+ */
 @RestController
 @Slf4j
 public class VendorController {
 
 
     @Autowired
+    private VendorService vendorService;
+
+    @Autowired
     private VendorRepository vendorRepository;
+
 
     @PostMapping("/vendor")
     public Result<Vendor> vendorAdd(@RequestBody @Valid Vendor vendor, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResultUtil.error(1, bindingResult.getFieldError().getDefaultMessage());
         }
-        return ResultUtil.success(vendorRepository.save(vendor));
+        return ResultUtil.success(vendorService.save(vendor));
     }
 
     @PostMapping("/vendors")
@@ -33,7 +41,7 @@ public class VendorController {
         if (bindingResult.hasErrors()) {
             return ResultUtil.error(1, bindingResult.getFieldError().getDefaultMessage());
         }
-        return ResultUtil.success(vendorRepository.save(vendors));
+        return ResultUtil.success(vendorService.save(vendors));
     }
 
 

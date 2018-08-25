@@ -43,6 +43,8 @@ public class Vendor extends SimpleGenericEntity<Long> {
     private Date    registerTime;
     private String  shopPic;
     private String  remark;
+    private Integer isNeedWarn;
+    private String warnReason;
     /*private Date gmt_create;
     private Date gmt_update;*/
 
