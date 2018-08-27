@@ -10,13 +10,9 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -58,9 +54,29 @@ public class VendorServiceImpl implements VendorService {
     public Page<Vendor> findVendorPage(VendorForm vendorForm, Pageable pageable) {
         return vendorRepository.findAll((root, criteriaQuery, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<Predicate>();
-            //专管所
+            // 专管所
             if (vendorForm.getManagerOffice() != null) {
                 predicates.add(criteriaBuilder.equal(root.<String>get("managerOffice"), vendorForm.getManagerOffice()));
+            }
+            // 门店名称
+            if (!Strings.isNullOrEmpty(vendorForm.getVendorName())) {
+                predicates.add(criteriaBuilder.like(root.get("vendorName"), "%" + vendorForm.getVendorName() + "%"));
+            }
+            // 运营者名称
+            if (!Strings.isNullOrEmpty(vendorForm.getOperatorName())) {
+                predicates.add(criteriaBuilder.like(root.get("operatorName"), "%" + vendorForm.getOperatorName() + "%"));
+            }
+            // 地址
+            if (!Strings.isNullOrEmpty(vendorForm.getAddress())) {
+                predicates.add(criteriaBuilder.like(root.get("address"), "%" + vendorForm.getAddress() + "%"));
+            }
+            // 电话
+            if (!Strings.isNullOrEmpty(vendorForm.getPhone())) {
+                predicates.add(criteriaBuilder.like(root.get("phone"), "%" + vendorForm.getPhone() + "%"));
+            }
+            // 是否需要预警
+            if (vendorForm.getIsNeedWarn() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("isNeedWarn"), vendorForm.getIsNeedWarn()));
             }
             return criteriaQuery.where(predicates.toArray(new Predicate[predicates.size()])).getRestriction();
         }, pageable);
