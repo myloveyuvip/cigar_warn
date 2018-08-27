@@ -3,12 +3,20 @@ package com.yuliyao.web.service.impl;
 import com.google.common.base.Strings;
 import com.yuliyao.web.constant.VendorConstant;
 import com.yuliyao.web.entity.Vendor;
+import com.yuliyao.web.form.VendorForm;
 import com.yuliyao.web.repository.VendorRepository;
 import com.yuliyao.web.service.VendorService;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -44,6 +52,18 @@ public class VendorServiceImpl implements VendorService {
             }
         }
         return result;
+    }
+
+    @Override
+    public Page<Vendor> findVendorPage(VendorForm vendorForm, Pageable pageable) {
+        return vendorRepository.findAll((root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<Predicate>();
+            //专管所
+            if (vendorForm.getManagerOffice() != null) {
+                predicates.add(criteriaBuilder.equal(root.<String>get("managerOffice"), vendorForm.getManagerOffice()));
+            }
+            return criteriaQuery.where(predicates.toArray(new Predicate[predicates.size()])).getRestriction();
+        }, pageable);
     }
 
     /**

@@ -1,6 +1,9 @@
 package com.yuliyao.web.service;
 
 import com.yuliyao.web.entity.Vendor;
+import com.yuliyao.web.form.VendorForm;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -23,5 +26,13 @@ public interface VendorService {
      * @return
      */
     List<Vendor> save(List<Vendor> vendor);
+
+    /**
+     * 查询无证户分页信息
+     * @param vendorForm
+     * @param pageable
+     * @return
+     */
+    Page<Vendor> findVendorPage(VendorForm vendorForm, Pageable pageable);
 
 }

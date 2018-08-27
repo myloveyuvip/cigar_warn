@@ -1,5 +1,6 @@
 package com.yuliyao.web.controller;
 
+import com.yuliyao.web.form.VendorForm;
 import com.yuliyao.web.service.VendorService;
 import lombok.extern.slf4j.Slf4j;
 import com.yuliyao.web.entity.Result;
@@ -7,6 +8,9 @@ import com.yuliyao.web.entity.Vendor;
 import com.yuliyao.web.repository.VendorRepository;
 import com.yuliyao.web.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,4 +67,10 @@ public class VendorController {
         return ResultUtil.success();
     }
 
+    @PostMapping("vendorPage")
+    public Result<Vendor> findVendorPage(@RequestBody VendorForm vendorForm, BindingResult bindingResult) {
+        PageRequest pageable = new PageRequest(vendorForm.getPage(), vendorForm.getSize());
+        Page<Vendor> vendorPage = vendorService.findVendorPage(vendorForm, pageable);
+        return ResultUtil.success(vendorPage);
+    }
 }
