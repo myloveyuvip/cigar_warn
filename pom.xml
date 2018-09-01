@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.hswebframework.web</groupId>
-    <artifactId>hsweb-demo</artifactId>
-    <version>3.0-SNAPSHOT</version>
+    <groupId>com.yuliyao.web</groupId>
+    <artifactId>cigar-warn</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.locales>zh_CN</project.build.locales>
@@ -114,6 +114,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>android-json</artifactId>
+                    <groupId>com.vaadin.external.google</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!--<dependency>-->
@@ -337,6 +343,11 @@
             <version>1.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.qcloudsms</groupId>
+            <artifactId>qcloudsms</artifactId>
+            <version>1.0.5</version>
+        </dependency>
 
     </dependencies>
 

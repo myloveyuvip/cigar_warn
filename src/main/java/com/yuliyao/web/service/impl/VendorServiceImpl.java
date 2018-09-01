@@ -4,12 +4,14 @@ import com.google.common.base.Strings;
 import com.yuliyao.web.constant.VendorConstant;
 import com.yuliyao.web.entity.Vendor;
 import com.yuliyao.web.form.VendorForm;
+import com.yuliyao.web.manager.SmsManager;
 import com.yuliyao.web.repository.VendorRepository;
 import com.yuliyao.web.service.VendorService;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.Predicate;
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 /**
@@ -28,6 +31,9 @@ import java.util.Objects;
 public class VendorServiceImpl implements VendorService {
 
     @Autowired
+    private SmsManager smsManager;
+
+    @Autowired
     private VendorRepository vendorRepository;
 
 
@@ -35,6 +41,8 @@ public class VendorServiceImpl implements VendorService {
     public Vendor save(Vendor vendor) {
         //判断是否需要预警
         deduceWarn(vendor);
+        //判断是否需要发短信预警
+        deduceSendMsg(vendor);
         vendorRepository.save(vendor);
         return null;
     }
@@ -43,9 +51,9 @@ public class VendorServiceImpl implements VendorService {
     public List<Vendor> save(List<Vendor> vendors) {
         List<Vendor> result = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(vendors)) {
-            for (Vendor vendor : vendors) {
-                result.add(this.save(vendor));
-            }
+            vendors.stream().forEach(this::deduceWarn);
+            deduceSendMsg(vendors);
+            result = vendorRepository.save(vendors);
         }
         return result;
     }
@@ -78,7 +86,9 @@ public class VendorServiceImpl implements VendorService {
             if (vendorForm.getIsNeedWarn() != null) {
                 predicates.add(criteriaBuilder.equal(root.get("isNeedWarn"), vendorForm.getIsNeedWarn()));
             }
-            return criteriaQuery.where(predicates.toArray(new Predicate[predicates.size()])).getRestriction();
+            return criteriaQuery.where(predicates.toArray(new Predicate[predicates.size()])).orderBy(criteriaBuilder
+                    .desc(root.get("id")))
+                    .getRestriction();
         }, pageable);
     }
 
@@ -170,5 +180,26 @@ public class VendorServiceImpl implements VendorService {
             return true;
         }
         return false;
+    }
+
+    @Async
+    void deduceSendMsg(Vendor vendor) {
+        if (Objects.equals(vendor.getIsNeedWarn(), VendorConstant.YES)) {
+            smsManager.sendWarnMsg("", vendor.getVendorName(), vendor.getWarnReason());
+        }
+    }
+
+    @Async
+    void deduceSendMsg(List<Vendor> vendors) {
+        List<Vendor> warnVendors = vendors.stream().filter(vendor -> Objects.equals(vendor.getIsNeedWarn(),
+                VendorConstant.YES)).collect(Collectors.toList());
+        if (CollectionUtils.isEmpty(warnVendors)) {
+            return;
+        }
+        if (warnVendors.size() == 1) {
+            deduceSendMsg(warnVendors.get(0));
+        } else {
+            smsManager.sendMultiWarnMsg("",vendors.get(0).getVendorName());
+        }
     }
 }

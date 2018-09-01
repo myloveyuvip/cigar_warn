@@ -1,5 +1,10 @@
 package com.yuliyao.web.entity;
 
+import com.alibaba.fastjson.JSON;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * http请求返回的最外层对象
  * Created by 廖师兄
@@ -38,5 +43,16 @@ public class Result<T> {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    public static void add(Test test) {
+        test.i++;
+    }
+
+    public static void main(String[] args) {
+        List<Test> list = new ArrayList<>();
+        list.stream().forEach(test -> add(test));
+        list.stream().forEach(test -> System.out.println(JSON.toJSONString(test)));
+
     }
 }
