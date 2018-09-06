@@ -10,7 +10,6 @@ import lombok.Getter;
 public class BizException extends RuntimeException{
 
     private Integer code;
-    private String message;
 
     public BizException(Integer code, String message) {
         super(message);

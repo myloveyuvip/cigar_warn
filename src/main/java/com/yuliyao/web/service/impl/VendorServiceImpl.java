@@ -184,7 +184,7 @@ public class VendorServiceImpl implements VendorService {
 
     @Async
     void deduceSendMsg(Vendor vendor) {
-        if (Objects.equals(vendor.getIsNeedWarn(), VendorConstant.YES)) {
+        if (vendor.getId()==null && Objects.equals(vendor.getIsNeedWarn(), VendorConstant.YES)) {
             smsManager.sendWarnMsg("", vendor.getVendorName(), vendor.getWarnReason());
         }
     }

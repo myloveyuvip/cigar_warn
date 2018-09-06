@@ -11,9 +11,9 @@ public class ResultUtil {
 
     public static Result success(Object object) {
         Result result = new Result();
-        result.setCode(0);
+        result.setStatus(200);
         result.setMsg("成功");
-        result.setData(object);
+        result.setResult(object);
         return result;
     }
 
@@ -23,7 +23,7 @@ public class ResultUtil {
 
     public static Result error(Integer code, String msg) {
         Result result = new Result();
-        result.setCode(code);
+        result.setStatus(code);
         result.setMsg(msg);
         return result;
     }
