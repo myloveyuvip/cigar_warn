@@ -24,6 +24,7 @@ public class VendorConstant {
 
     public static final int MONTHLY_SALES_MT_50 = 5;
 
+    public static final String SEPERATOR = "、";
 
 
 

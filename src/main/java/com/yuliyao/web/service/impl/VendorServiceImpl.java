@@ -111,9 +111,18 @@ public class VendorServiceImpl implements VendorService {
             vendor.setWarnReason("有工商执照");
             return;
         }
+        //todo
         // 2、卷烟喷码超过3家不一样
-
+        if (!Strings.isNullOrEmpty(vendor.getCigarCode()) && vendor.getCigarCode().split(VendorConstant.SEPERATOR)
+                .length > 3) {
+            vendor.setWarnReason("卷烟喷码超过3家");
+            return;
+        }
         // 3、主销品种超过5个
+        if (!Strings.isNullOrEmpty(vendor.getSaleKind()) && vendor.getCigarCode().split(VendorConstant.SEPERATOR).length > 5) {
+            vendor.setWarnReason("主销品种超过5个");
+            return;
+        }
         // 4、月销量超过50条
         if (vendor.getMonthlySales() != null && vendor.getMonthlySales() == VendorConstant.MONTHLY_SALES_MT_50) {
             vendor.setWarnReason("月销量超过50条");
