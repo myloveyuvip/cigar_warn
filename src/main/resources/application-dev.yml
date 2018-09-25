@@ -3,7 +3,8 @@ spring:
 #        url: jdbc:log4jdbc:mysql://159.138.21.224:3306/cigar_warn?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
 #        username: www
 #        password: ltzdwww
-        url: jdbc:log4jdbc:mysql://localhost:3306/cigar_warn?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+        url: jdbc:log4jdbc:mysql://39.108.94.235:3306/cigar_warn?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+#        url: jdbc:log4jdbc:mysql://localhost:3306/cigar_warn?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
         username : root
         password : admin
 #        url : jdbc:h2:file:./data/h2db

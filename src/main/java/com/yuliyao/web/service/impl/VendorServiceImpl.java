@@ -119,7 +119,7 @@ public class VendorServiceImpl implements VendorService {
             return;
         }
         // 3、主销品种超过5个
-        if (!Strings.isNullOrEmpty(vendor.getSaleKind()) && vendor.getCigarCode().split(VendorConstant.SEPERATOR).length > 5) {
+        if (!Strings.isNullOrEmpty(vendor.getSaleKind()) && vendor.getSaleKind().split(VendorConstant.SEPERATOR).length > 5) {
             vendor.setWarnReason("主销品种超过5个");
             return;
         }

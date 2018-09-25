@@ -5,7 +5,6 @@ import com.github.qcloudsms.SmsSingleSenderResult;
 import com.yuliyao.web.manager.SmsManager;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,7 +22,7 @@ public class SmsManagerImplTest {
     @Autowired
     private SmsManager smsManager;
 
-    @Test
+//    @Test
     public void sendWarnMsg() {
 
         SmsSingleSenderResult smsSingleSenderResult =
